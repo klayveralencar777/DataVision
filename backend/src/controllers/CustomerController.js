@@ -6,9 +6,9 @@ export class CustomerController {
         this.customerService = new CustomerService()
     }
 
-    async findAllCostumers(req, res) {
+    async findAllCustomers(req, res) {
         try {
-            const customers = await this.customerService.findAllCostumers()
+            const customers = await this.customerService.findAllCustomers()
             return res.status(200).json(customers)
             
         } catch (error) {

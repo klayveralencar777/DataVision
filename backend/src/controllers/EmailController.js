@@ -6,6 +6,7 @@ export class EmailController {
        
     }
     async sendEmail(req, res) {
+        console.log(req.body)
         const {email} = req.body
         try {
             await this.emailService.sendLogin(email)

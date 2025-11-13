@@ -5,7 +5,7 @@ export class CustomerService {
         this.customerRepository = new CustomerRepository()
     }
     
-    async findAllCostumers() {
+    async findAllCustomers() {
         return await this.customerRepository.findAll()
     }
 }

@@ -5,7 +5,7 @@ const router = express.Router()
 const controller = new CustomerController()
 router.use(AuthMiddleware)
 
-router.get('/find', controller.findAllCostumers.bind(controller))
+router.get('/find', controller.findAllCustomers.bind(controller))
 
 
 export default router

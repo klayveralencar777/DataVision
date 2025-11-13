@@ -5,7 +5,7 @@ export class CustomerRepository {
     constructor() {}
 
     async findAll() {
-        return await prisma.costumer.findMany()
+        return await prisma.customer.findMany()
 
     }
 }
