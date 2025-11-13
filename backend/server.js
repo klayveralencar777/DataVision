@@ -2,7 +2,7 @@ import express from 'express'
 import  EmailRouter  from './src/routes/EmailRouter.js'
 import UserRouter from './src/routes/UserRoutes.js'
 import LoginRouter from './src/routes/LoginRouter.js'
-import CostumerRouter from './src/routes/CostumerRoute.js'
+import CostumerRouter from './src/routes/CustomerRoute.js'
 const app = express()
 const PORT = 3000
 app.use(express.json())

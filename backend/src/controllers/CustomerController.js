@@ -1,15 +1,15 @@
-import { CostumerService } from "../services/CostumerService.js";
+import {CustomerService} from "../services/CustomerService.js";
 
 export class CostumerController {
     
     constructor() {
-        this.costumerService = new CostumerService()
+        this.customerService = new CustomerService()
     }
 
     async findAllCostumers(req, res) {
         try {
-            const costumers = await this.costumerService.findAllCostumers()
-            return res.status(200).json(costumers)
+            const customers = await this.customerService.findAllCostumers()
+            return res.status(200).json(customers)
             
         } catch (error) {
             return res.status(400).json({error: error.message})        

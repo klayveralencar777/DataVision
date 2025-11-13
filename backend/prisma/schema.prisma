@@ -19,7 +19,7 @@ model User {
 
 }
 
-model Costumer {
+model Customer {
   id String @id @default(uuid())
   name String
   email String @unique
@@ -36,7 +36,7 @@ model Transaction {
   status String
   type String
   customerId String
-  costumer Costumer @relation(fields: [customerId], references: [id])
+  costumer Customer @relation(fields: [customerId], references: [id])
 }
 
 enum Role {
