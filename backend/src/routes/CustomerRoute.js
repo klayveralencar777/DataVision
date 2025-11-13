@@ -1,8 +1,8 @@
 import express from 'express'
-import { CostumerController } from '../controllers/CostumerController.js'
+import { CustomerController } from '../controllers/CustomerController.js'
 import { AuthMiddleware } from '../middlewares/AuthMiddleware.js'
 const router = express.Router()
-const controller = new CostumerController()
+const controller = new CustomerController()
 router.use(AuthMiddleware)
 
 router.get('/find', controller.findAllCostumers.bind(controller))

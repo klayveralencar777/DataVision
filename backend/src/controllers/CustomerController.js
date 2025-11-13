@@ -1,6 +1,6 @@
 import {CustomerService} from "../services/CustomerService.js";
 
-export class CostumerController {
+export class CustomerController {
     
     constructor() {
         this.customerService = new CustomerService()
