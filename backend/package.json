@@ -1,7 +1,16 @@
 {
   "dependencies": {
-    "express": "^5.1.0"
-    
+    "@prisma/client": "^6.19.0",
+    "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
+    "nodemailer": "^7.0.10"
   },
-  "type": "module"
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "type": "module",
+  "devDependencies": {
+    "nodemon": "^3.1.11",
+    "prisma": "^6.19.0"
+  }
 }
