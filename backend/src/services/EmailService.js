@@ -32,12 +32,11 @@ export class EmailService {
             }
 
         })
-
         await send.sendMail({
             from: `Data-Vision <${process.env.EMAIL_USER}>`,
             to,
             subject: "Bem-vindo(a) ao DATA VISION.",
-            text: `Olá! Seu acesso ao Data Vision foi criado com sucesso! \nEmail: ${to}\nSenha: ${password}}`
+            text: `Olá! Seu acesso ao Data Vision foi criado com sucesso! \nEmail: ${to}\nSenha: ${password}`
         })
     }
 }

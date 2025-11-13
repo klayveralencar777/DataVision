@@ -27,9 +27,10 @@ export class UserRepository {
                 id: true,
                 name: true,
                 email: true,
+                password: true,
                 createdAt: true,
                 role: true
              }            
-            })
+         })
     }
 }
