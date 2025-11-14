@@ -9,7 +9,7 @@ app.use(express.json())
 app.use('/send', EmailRouter)
 app.use('/users', UserRouter)
 app.use('/auth', LoginRouter)
-app.use('/costumers', CustomerRouter)
+app.use('/customers', CustomerRouter)
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })

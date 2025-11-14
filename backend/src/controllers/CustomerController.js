@@ -7,12 +7,28 @@ export class CustomerController {
     }
 
     async findAllCustomers(req, res) {
+        const customers = req.body
+        const userId = req.user.id
         try {
-            const customers = await this.customerService.findAllCustomers()
-            return res.status(200).json(customers)
+           await this.customerService.findAllCustomers(customers, userId)
+           return res.status(200).json(customers)
             
         } catch (error) {
-            return res.status(400).json({error: error.message})        
+            return res.status(401).json({error: error.message})
+            
         }
     }
+    async createCustomer(req, res) {
+        const newCustomer = req.body
+        const userId = req.user.id
+        try {
+             const customerCreated = await this.customerService.createCustomer(newCustomer, userId)
+             return res.status(201).json(customerCreated)
+         
+        } catch (error) {
+            console.log(error)
+            return res.status(401).json({error: error.message})            
+        }
+    }
+
 }

@@ -16,7 +16,7 @@ export class AuthController {
                 return res.status(401).json({error: "Credenciais inválidas. Tente novamente"})
             }
 
-            const payload = {sub: user.id, email: user.email}
+            const payload = {id: user.id, role: user.role}
             const secret = process.env.JWT_SECRET
             const expiresIn = process.env.JWT_EXPIRES_IN
 

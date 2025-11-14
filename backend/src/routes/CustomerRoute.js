@@ -6,6 +6,7 @@ const controller = new CustomerController()
 router.use(AuthMiddleware)
 
 router.get('/find', controller.findAllCustomers.bind(controller))
+router.post('/create', controller.createCustomer.bind(controller))
 
 
 export default router
