@@ -1,0 +1,42 @@
+import { TransactionService } from "../services/TransactionService.js";
+
+export class TransactionController{
+    constructor() {
+        this.transactionService = new TransactionService()
+    }
+
+    async findAllTransactions(req, res ) {
+        try {
+            const transactions = await this.transactionService.findAllTransactions(req.user.id)
+            return res.status(200).json(transactions)
+            
+        } catch (error) {
+            console.log(error)
+            return res.status(401).json({error: error.message})
+        }
+    }
+    async createTransaction(req, res) {
+        
+        try {
+            const newTransaction = await this.transactionService.createTransaction(req.body, req.user.id)
+            return res.status(201).json(newTransaction)
+            
+         } catch (error) {
+            console.log(error)
+            return res.status(401).json({error: error.message})
+            
+        }
+
+    }
+    async findTransactionById(req, res) {
+        try {
+            const transaction = await this.transactionService.findTransactionById(req.params.id, req.user.id)
+            return res.status(201).json(transaction)
+            
+        } catch (error) {
+            console.log(error)
+            return res.status(404).json({error: error.message})
+            
+        }
+    }
+}

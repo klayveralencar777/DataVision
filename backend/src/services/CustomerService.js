@@ -9,6 +9,8 @@ export class CustomerService {
         return await this.customerRepository.findAll(userId)
     }
     async findCustomerById(id, userId) {
+        this.checkUser(userId)  
+
         const customer = await this.customerRepository.findById(id, userId)
         if(!customer) {
             throw new Error(`Cliente não encontrado com o ID: ${id}`)
@@ -16,6 +18,8 @@ export class CustomerService {
         return customer
     }
     async findCustomerByEmail(email, userId) {
+        this.checkUser(userId)
+
         const customer = await this.customerRepository.findByEmail(email, userId)
         if(!customer) {
             throw new Error(`Cliente não encontrado com o Email: ${email}`)
@@ -24,9 +28,8 @@ export class CustomerService {
     }
     
     async createCustomer(customer, userId) {
-        if (!userId) {
-            throw new Error('Usuário não autenticado')
-        }
+        this.checkUser(userId)
+
         const exists = await this.customerRepository.findByEmail(customer.email, userId)
         if(exists) {
             throw new Error(`Já existe um cliente com o email: ${customer.email}`)
@@ -35,13 +38,22 @@ export class CustomerService {
     }
 
     async deleteCustomerById(id, userId) {
+         this.checkUser(userId)
+
          await this.findCustomerById(id, userId)
          return await this.customerRepository.deleteById(id, userId)     
     }
 
     async deleteCustomerByEmail(email, userId) {
+        this.checkUser(userId)
+
         await this.findCustomerByEmail(email, userId)
         return await this.customerRepository.deleteByEmail(email, userId)
     }
-    
+
+        checkUser(userId) {
+        if(!userId) {
+            throw new Error("Usuário não autenticado")
+        }
+    }
 }
