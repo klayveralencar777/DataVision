@@ -13,11 +13,10 @@ export class CustomerRepository {
             data: {
                 ...customer,
                 userId
-                
+                         
             }
         })
     }
-
     async findById(id, userId) {
         return await prisma.customer.findFirst({ where: {id, userId}})
        
