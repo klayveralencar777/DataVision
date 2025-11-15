@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="600" viewBox="0 0 1400 600" role="img" aria-label="DataVision logo">
+  <defs>
+    <!-- neon gradient -->
+    <linearGradient id="neonGrad" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#00E6FF"/>
+      <stop offset="1" stop-color="#6A00FF"/>
+    </linearGradient>
+
+    <!-- glow filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- thin stroke style -->
+    <style type="text/css"><![CDATA[
+      .eye-stroke { fill: none; stroke: url(#neonGrad); stroke-width:10; stroke-linecap:round; stroke-linejoin:round; filter: url(#glow); }
+      .eye-fill { fill: none; stroke: #071424; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+      .pupil { fill: #071424; }
+      .circuit { fill: none; stroke: url(#neonGrad); stroke-width:9; stroke-linecap:round; stroke-linejoin:round; filter: url(#glow); }
+      .circuit-inner { fill: none; stroke: #071424; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+      .word { font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight:700; font-size:96px; fill:#05293a; letter-spacing:2px; }
+    ]]></style>
+  </defs>
+
+  <!-- Left: stylized cyber-eye inspired by Eye of Horus -->
+  <g transform="translate(60,60) scale(1.0)">
+    <!-- top lash / data layers -->
+    <path class="eye-stroke" d="M40 140 C160 20, 360 20, 560 140" />
+    <path class="eye-stroke" d="M40 170 C160 60, 360 60, 560 170" />
+    <path class="eye-stroke" d="M40 200 C160 100, 360 100, 560 200" />
+
+    <!-- eye main contour -->
+    <path class="eye-stroke" d="M60 200 C170 120, 290 100, 420 200 C290 260, 170 260, 60 200 Z" />
+
+    <!-- inner pupil and iris rings -->
+    <g transform="translate(240,190)">
+      <circle r="40" class="eye-stroke" />
+      <circle r="18" class="pupil" />
+    </g>
+
+    <!-- cyber circuit 'tail' / Horus flourish -->
+    <path class="circuit" d="M420 230 L520 300" />
+    <path class="circuit-inner" d="M420 230 L520 300" />
+    <circle cx="520" cy="300" r="14" class="circuit" />
+    <circle cx="520" cy="300" r="8" fill="#071424"/>
+
+    <path class="circuit" d="M400 250 L470 330" />
+    <path class="circuit-inner" d="M400 250 L470 330" />
+    <circle cx="470" cy="330" r="10" class="circuit" />
+    <circle cx="470" cy="330" r="5" fill="#071424"/>
+
+    <path class="circuit" d="M360 290 L420 360" />
+    <path class="circuit-inner" d="M360 290 L420 360" />
+    <circle cx="420" cy="360" r="9" class="circuit" />
+    <circle cx="420" cy="360" r="4" fill="#071424"/>
+
+    <!-- subtle inner dark lines for depth -->
+    <path class="eye-fill" d="M60 200 C170 140, 290 120, 420 200" />
+    <path class="eye-fill" d="M100 220 C200 170, 300 160, 380 220" />
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(740,210)">
+    <text class="word">Data</text>
+    <text class="word" y="110">Vision</text>
+  </g>
+</svg>
