@@ -9,17 +9,17 @@ export class MetricsService {
         const totalCustomers = await this.metricsRepository.countCustomers(userId)
         const totalTransactions = await this.metricsRepository.countTransactions(userId)
         const activeCustomers = await this.metricsRepository.countActiveCustomers(userId)
-
+        const amountTransactions = await this.metricsRepository.amountTransactions(userId)
 
         return {
             totalCustomers,
             totalTransactions,
-            activeCustomers
+            activeCustomers,
+            amountTransactions
         }
         
            
-    }
-  
+    } 
 }
 
 
