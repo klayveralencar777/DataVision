@@ -1,6 +1,7 @@
 import { UserRepository } from "../repositories/UserRepository.js";
 import bcrypt from 'bcrypt'
 import nodemailer from 'nodemailer'
+import { EmailAlreadyExists } from "../exceptions/Exceptions.js";
 
 export class EmailService {
     constructor() {
@@ -10,7 +11,7 @@ export class EmailService {
     async sendLogin(email) {
         let user = await this.userRepository.findByEmail(email)
         if(user) {
-            await this.sendEmail(email, "Sua conta já existe, use sua senha atual")
+            throw new EmailAlreadyExists(`${email} já cadastrado, tente outro.`)
         }
         const password = Math.random().toString(36).slice(-8)
         const hashPassowrd = await bcrypt.hash(password, 10)

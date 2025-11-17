@@ -17,56 +17,55 @@ export class CustomerController {
         }
     }
 
-    async findCustomerById(req, res)  {
+    async findCustomerById(req, res, next)  {
         try {
             const customer = await this.customerService.findCustomerById(req.params.id, req.user.id)
             return res.status(200).json(customer)
             
         } catch (error) {
-            return res.status(404).json({error: error.message})
+            next(error)
             
         }
     }
-    async findCustomerByEmail(req, res) {
+    async findCustomerByEmail(req, res, next) {
         try {
             const customer = await this.customerService.findCustomerByEmail(req.params.email, req.user.id)
             return res.status(200).json(customer)
             
         } catch (error) {
-            return res.status(404).json({error: error.message})
+            next(error)
             
         }
     }
 
-    async createCustomer(req, res) {   
+    async createCustomer(req, res, next) {   
         try {
              const customerCreated = await this.customerService.createCustomer(req.body, req.user.id)
              return res.status(201).json(customerCreated)
          
         } catch (error) {
-            console.log(error)
-            return res.status(401).json({error: error.message})            
+           next(error)         
         }
     }
 
-    async deleteCustomerById(req, res) {
+    async deleteCustomerById(req, res, next) {
         try {
             await this.customerService.deleteCustomerById(req.params.id, req.user.id)
             return res.status(204).json(`Cliente removido com sucesso com o ID: ${req.params.id}`)
             
         } catch (error) {
             console.log(error)
-            return res.status(400).json({error: error.message})           
+            next(error)           
         }
     }
 
-    async deleteCustomerByEmail(req, res) {
+    async deleteCustomerByEmail(req, res, next) {
         try {
             await this.customerService.deleteCustomerByEmail(req.params.email, req.user.id)
             return res.status(204).json(`Cliente removido com sucesso com o Email: ${req.params.email}`)
             
         } catch (error) {
-            return res.status(400).json({error: error.message})           
+            next(error)         
         }
     }
     

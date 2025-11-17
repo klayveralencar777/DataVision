@@ -1,3 +1,4 @@
+import { EmailAlreadyExists, EntityNotFound, ForbiddenError, UnauthorizedError } from "../exceptions/Exceptions.js";
 import {CustomerRepository} from "../repositories/CustomerRepository.js";
 
 export class CustomerService {
@@ -13,7 +14,7 @@ export class CustomerService {
 
         const customer = await this.customerRepository.findById(id, userId)
         if(!customer) {
-            throw new Error(`Cliente não encontrado com o ID: ${id}`)
+            throw new EntityNotFound(`Cliente não encontrado com o ID: ${id}`)
         }
         return customer
     }
@@ -22,7 +23,7 @@ export class CustomerService {
 
         const customer = await this.customerRepository.findByEmail(email, userId)
         if(!customer) {
-            throw new Error(`Cliente não encontrado com o Email: ${email}`)
+            throw new EntityNotFound(`Cliente não encontrado com o Email: ${email}`)
         }
         return customer
     }
@@ -32,7 +33,7 @@ export class CustomerService {
 
         const exists = await this.customerRepository.findByEmail(customer.email, userId)
         if(exists) {
-            throw new Error(`Já existe um cliente com o email: ${customer.email}`)
+            throw new EmailAlreadyExists(`Já existe um cliente com o email: ${customer.email}`)
         }
         return await this.customerRepository.create(customer, userId)
     }
@@ -53,20 +54,20 @@ export class CustomerService {
 
         checkUser(userId) {
         if(!userId) {
-            throw new Error("Usuário não autenticado")
+            throw new UnauthorizedError(`Usuário não autorizado.`)
         }
     }
     async checkByIdTransactions(id, userId) {
         const customer = await this.customerRepository.findByIdTransactions(id, userId)
         if(customer) {
-            throw new Error(`Não é possível remover clientes com transações ativas.`)
+            throw new ForbiddenError(`Não é possível remover clientes com transações ativas.`)
         }       
     }
 
     async checkByEmailTransactions(email, userId) {
         const customer = await this.customerRepository.findByEmailTransactions(email, userId)
         if(customer) {
-            throw new Error(`Não é possível remover clientes com transações ativas.`)
+            throw new ForbiddenError(`Não é possível remover clientes com transações ativas.`)
         }
     }
 }

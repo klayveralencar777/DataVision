@@ -1,19 +1,20 @@
 import { UserService } from "../services/UserService.js";
 import bycript from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { UnauthorizedError } from "../exceptions/Exceptions.js";
 
 export class AuthController {
     constructor() {
         this.userService = new UserService()
     }
 
-    async userLogin(req, res) {
+    async userLogin(req, res, next) {
         const{email, password} = req.body
         try {
             const user = await this.userService.findUserByEmail(email)
             const checkPassword = await bycript.compare(password, user.password)
             if(!checkPassword) {
-                return res.status(401).json({error: "Credenciais inválidas. Tente novamente"})
+                throw new UnauthorizedError(`Credenciais inválidas. Tente novamente`)
             }
 
             const payload = {id: user.id, role: user.role}
@@ -30,7 +31,7 @@ export class AuthController {
             })
 
         } catch (error) {
-            return res.status(401).json({error: error.message})
+            next(error)
             
         }
     }

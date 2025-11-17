@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { TransactionRepository } from "../repositories/TransactionRepository.js";
+import { EntityNotFound, UnauthorizedError } from "../exceptions/Exceptions.js";
 const prisma = new PrismaClient()
 
 export class TransactionService{
@@ -8,14 +9,12 @@ export class TransactionService{
     }
 
     async findAllTransactions(userId) {
-        
+        this.checkUser(userId)
         return await this.transactionRepository.findAll(userId)
     }
     
     async createTransaction(transaction, userId) {
-        if(!userId) {
-            throw new Error(`Usuário não autorizado`)
-        }
+        this.checkUser(userId)
          const customer = await prisma.customer.findFirst({
             where: {
                 id: transaction.customerId,
@@ -23,7 +22,7 @@ export class TransactionService{
             }})
 
             if(!customer) {
-                throw new Error(`Cliente não encontrado ou usuário sem permissão`)
+                throw new EntityNotFound(`Cliente não encontrado ou usuário sem permissão`)
             }
             const newTransaction = {
                 amount: transaction.amount,
@@ -37,8 +36,14 @@ export class TransactionService{
     async findTransactionById(id, userId) {
         const transaction = await this.transactionRepository.findById(id, userId)
         if(!transaction) {
-            throw new Error(`Transação não encontrada com o ID: ${id}`)
+            throw new EntityNotFound(`Transação não encontrada com o ID: ${id}`)
         } 
         return transaction             
+    }
+
+    checkUser(userId) {
+        if(!userId) {
+            throw new UnauthorizedError(`Usuário não autenticado`)
+        }
     }
 }
