@@ -9,15 +9,24 @@ export class MetricsService {
         const totalCustomers = await this.metricsRepository.countCustomers(userId)
         const totalTransactions = await this.metricsRepository.countTransactions(userId)
         const activeCustomers = await this.metricsRepository.countActiveCustomers(userId)
-        const amountTransactions = await this.metricsRepository.amountTransactions(userId)
+        const totalRevenue = await this.metricsRepository.amountTransactions(userId)
         const averageTicket = await this.metricsRepository.averageTicket(userId)
-
+        const topCustomers = await this.metricsRepository.topCustomers(userId)
+        let conversionRate = (activeCustomers / totalCustomers) * 100
+        if(totalCustomers <= 0) {
+            conversionRate = 0
+        }
+        
+        
+        
         return {
             totalCustomers,
             totalTransactions,
             activeCustomers,
-            amountTransactions: parseFloat(amountTransactions.toFixed(2)),
-            averageTicket: parseFloat(averageTicket.toFixed(2))
+            totalRevenue: parseFloat(totalRevenue.toFixed(2)),
+            averageTicket: parseFloat(averageTicket.toFixed(2)),
+            topCustomers,
+            conversionRate: parseFloat(conversionRate.toFixed(2))
         }
         
            
