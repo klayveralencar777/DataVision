@@ -1,3 +1,4 @@
+import { UnauthorizedError } from "../exceptions/Exceptions.js";
 import { MetricsRepository } from "../repositories/MetricsRepository.js";
 
 export class MetricsService {
@@ -6,6 +7,10 @@ export class MetricsService {
     }
 
     async getMetrics(userId) { 
+        
+        if(!userId) {
+            throw new UnauthorizedError(`Usuário não autenticado.`)
+        }
         
         const totalCustomers = await this.metricsRepository.countCustomers(userId)
         const totalTransactions = await this.metricsRepository.countTransactions(userId)

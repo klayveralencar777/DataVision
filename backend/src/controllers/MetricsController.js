@@ -4,7 +4,7 @@ export class MetricsController {
     constructor() {
         this.metricsService = new MetricsService()
     }
-    async countCustomers(req, res) {
+    async countCustomers(req, res, next) {
         try {
            
             const metrics = await this.metricsService.getMetrics(req.user.id)
@@ -12,7 +12,7 @@ export class MetricsController {
             
             
         } catch (error) {
-            return res.status(401).json({error: error.message})      
+            next(error)    
         }
     }
 }
