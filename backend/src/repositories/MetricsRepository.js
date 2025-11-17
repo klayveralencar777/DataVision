@@ -27,7 +27,16 @@ export class MetricsRepository {
         })
         return result._sum.amount || 0       
     }
-    
+
+    async averageTicket(userId) {
+        const result = await prisma.transaction.aggregate({
+            where: { customer : {userId}},
+            _avg: { amount: true}
+        })
+        return result._avg.amount || 0
+    }
+
+
     
 
 }
