@@ -14,5 +14,11 @@ export class MetricsRepository {
         
         })
     }
+    async countActiveCustomers(userId) {
+        return await prisma.customer.count({
+            where: {userId, status: "ativo"}
+        })
+    }
+
 }
 

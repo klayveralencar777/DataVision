@@ -6,24 +6,20 @@ export class MetricsService {
     }
 
     async getMetrics(userId) {
-        const[
-            totalCustomers,
-            totalTransactions,
+        const totalCustomers = await this.metricsRepository.countCustomers(userId)
+        const totalTransactions = await this.metricsRepository.countTransactions(userId)
+        const activeCustomers = await this.metricsRepository.countActiveCustomers(userId)
 
-        ] = await Promise.all([
-            this.metricsRepository.countCustomers(userId),
-            this.metricsRepository.countTransactions(userId)
-        ])
-        
 
         return {
             totalCustomers,
-            totalTransactions
+            totalTransactions,
+            activeCustomers
         }
+        
            
     }
-
-   
+  
 }
 
 
