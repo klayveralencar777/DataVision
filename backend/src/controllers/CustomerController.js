@@ -55,6 +55,7 @@ export class CustomerController {
             return res.status(204).json(`Cliente removido com sucesso com o ID: ${req.params.id}`)
             
         } catch (error) {
+            console.log(error)
             return res.status(400).json({error: error.message})           
         }
     }
