@@ -1,4 +1,4 @@
-import Hearder from "../_components/Hearder";
+import Hearder from "./_components/Header";
 
 const Home = () => {
   return (

@@ -16,10 +16,10 @@ export default function Dashboard() {
   const metrics = calculateMetrics();
 
   return (
-    <div className="flex flex-col justify-center min-h-screen bg-linear-to-br from-gray-50 to-gray-100 p-6">
-      <div className="flex flex-col space-y-6 mx-5">
+    <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 px-5 py-6">
+      <div className="space-y-6 mx-5">
         {/* Header */}
-        <div className="flex items-center justify-center flex-col gap-2 mb-8 px-5">
+        <div className="gap-2 mb-8 px-5">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Dashboard de Métricas
           </h1>
@@ -27,7 +27,7 @@ export default function Dashboard() {
         </div>
 
         {/* KPI Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full mx-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <KPICard
             title="Total de Clientes"
             value={metrics.totalCustomers}
@@ -80,7 +80,7 @@ export default function Dashboard() {
         </div>
 
         {/* Charts Grid */}
-        <div className="w-screen flex flex-row gap-6 pt-8 px-4">
+        <div className="w-full space-y-5 gap-6">
           <StatusChart data={metrics.transactionsByStatus} />
           <CustomerSpendingChart customers={metrics.topCustomers} />
         </div>
