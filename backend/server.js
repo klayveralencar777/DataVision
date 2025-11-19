@@ -7,6 +7,7 @@ import CustomerRouter from "./src/routes/CustomerRoutes.js";
 import TransactionRouter from "./src/routes/TransactionRoutes.js";
 import MetricsRouter from "./src/routes/MetricsRoutes.js";
 import ExceptionHandler from './src/middlewares/ExceptionHandler.js'
+import GroqAIRouter from './src/routes/GroqAIRouter.js'
 const app = express();
 const PORT = 3555;
 
@@ -25,6 +26,7 @@ app.use("/auth", LoginRouter);
 app.use("/customers", CustomerRouter);
 app.use("/transactions", TransactionRouter);
 app.use("/metrics", MetricsRouter);
+app.use("/ai", GroqAIRouter)
 app.use(ExceptionHandler)
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
