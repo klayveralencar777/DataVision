@@ -15,27 +15,25 @@ export class TransactionController{
             return res.status(401).json({error: error.message})
         }
     }
-    async createTransaction(req, res) {
+    async createTransaction(req, res, next) {
         
         try {
             const newTransaction = await this.transactionService.createTransaction(req.body, req.user.id)
             return res.status(201).json(newTransaction)
             
          } catch (error) {
-            console.log(error)
-            return res.status(401).json({error: error.message})
+            next(error)
             
         }
 
     }
-    async findTransactionById(req, res) {
+    async findTransactionById(req, res, next) {
         try {
             const transaction = await this.transactionService.findTransactionById(req.params.id, req.user.id)
             return res.status(201).json(transaction)
             
         } catch (error) {
-            console.log(error)
-            return res.status(404).json({error: error.message})
+            next(error)
             
         }
     }

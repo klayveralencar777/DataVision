@@ -51,14 +51,5 @@ export class MetricsRepository {
                 .slice(0, 10);
         })
     }
-
-
-
-
-
-
-
-
-
 }
 

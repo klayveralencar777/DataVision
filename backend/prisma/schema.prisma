@@ -22,16 +22,17 @@ model User {
 
 model Customer {
   id String @id @default(uuid())
-  name String
-  email String 
-  phone String
+  name String 
+  email String @unique
+  phone String  @db.VarChar(11)
+  cpf String @db.VarChar(11)
   createdAt DateTime @default(now())
-  status String @default("ativo")
+  status String @default("inativo")
   transactions Transaction[]
   userId String
   user User @relation(fields: [userId], references: [id])
   @@unique([email, userId])
- 
+
 }
 
 model Transaction {

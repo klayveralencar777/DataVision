@@ -1,3 +1,4 @@
+import { EntityNotFound } from "../exceptions/Exceptions.js";
 import { UserRepository } from "../repositories/UserRepository.js";
 
 export class UserService {
@@ -12,7 +13,7 @@ export class UserService {
     async findUserByEmail(email) {
         const user = await this.userRepository.findByEmail(email)
         if(!user) {
-            throw new Error(`Usuário com o email ${email} não encontrado.`)
+            throw new EntityNotFound(`Usuário com o email ${email} não encontrado.`)
         }
         return user     
     }

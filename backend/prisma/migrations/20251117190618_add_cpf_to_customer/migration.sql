@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Customer" ADD COLUMN     "cpf" TEXT NOT NULL DEFAULT '00011122233';

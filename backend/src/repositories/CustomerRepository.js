@@ -25,7 +25,21 @@ export class CustomerRepository {
     async findByEmail(email, userId) {
         return await prisma.customer.findFirst({ where: {email, userId}})
     }
-    
+
+    async findByIdTransactions(id, userId){
+        return await prisma.customer.findFirst({ 
+            where: {id, userId},
+            include: { transactions: true}
+        })
+
+    }
+    async findByEmailTransactions(email, userId) {
+        return await prisma.customer.findFirst({
+            where: { email, userId},
+            include: { transactions : true}
+        })
+    }
+
     async deleteById(id, userId) {
         return await prisma.customer.deleteMany({ where: {id, userId}})
     }
