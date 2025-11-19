@@ -59,15 +59,18 @@ export class CustomerService {
     }
     async checkByIdTransactions(id, userId) {
         const customer = await this.customerRepository.findByIdTransactions(id, userId)
-        if(customer) {
-            throw new ForbiddenError(`Não é possível remover clientes com transações ativas.`)
-        }       
+        this.checkCustomerExists(customer)  
     }
 
     async checkByEmailTransactions(email, userId) {
         const customer = await this.customerRepository.findByEmailTransactions(email, userId)
+        this.checkCustomerExists(customer)
+    }
+
+    checkCustomerExists(customer) {
         if(customer) {
-            throw new ForbiddenError(`Não é possível remover clientes com transações ativas.`)
+            throw new ForbiddenError(`Não é possível remover clientes com transações ativas`)
         }
+
     }
 }
