@@ -24,7 +24,7 @@ async function fetchApi<T>(
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({ error: 'Erro desconhecido' }));
-    throw new ApiError(response.status, error.error || error.message || 'Erro na requisição');
+    throw new ApiError(response.status, error.error || error.message);
   }
 
   return response.json();
@@ -40,6 +40,107 @@ export const api = {
           body: JSON.stringify({ email, password }),
         }
       ),
+    
+    sendLoginEmail: (email: string) =>
+      fetchApi<{ message: string }>('/send/send-login', {
+        method: 'POST',
+        body: JSON.stringify({ email }),
+      }),
   },
 
+  metrics: {
+    getAll: () =>
+      fetchApi<{
+        totalCustomers: number;
+        totalTransactions: number;
+        activeCustomers: number;
+        totalRevenue: number;
+        averageTicket: number;
+        conversionRate: number;
+        topCustomers: Array<{ id: string; name: string; totalPaid: number }>;
+      }>('/metrics'),
+  },
+
+  customers: {
+    getAll: () => 
+      fetchApi<Array<{ 
+        id: string; 
+        name: string; 
+        email: string;
+        phone: string;
+        cpf: string;
+        status: string;
+        createdAt: string;
+      }>>('/customers/find'),
+
+    getById: (id: string) =>
+      fetchApi<{ 
+        id: string; 
+        name: string; 
+        email: string;
+        phone: string;
+        cpf: string;
+        status: string;
+        createdAt: string;
+      }>(`/customers/find/${id}`),
+
+    getByEmail: (email: string) =>
+      fetchApi<{ 
+        id: string; 
+        name: string; 
+        email: string;
+        phone: string;
+        cpf: string;
+        status: string;
+        createdAt: string;
+      }>(`/customers/find/email/${email}`),
+
+    create: (customer: { name: string; email: string; phone: string; cpf: string }) =>
+      fetchApi<{ id: string }>('/customers/create', {
+        method: 'POST',
+        body: JSON.stringify(customer),
+      }),
+
+    deleteById: (id: string) =>
+      fetchApi(`/customers/delete/${id}`, { method: 'DELETE' }),
+
+    deleteByEmail: (email: string) =>
+      fetchApi(`/customers/delete/email/${email}`, { method: 'DELETE' }),
+  },
+
+  transactions: {
+    getAll: () =>
+      fetchApi<Array<{ 
+        id: string; 
+        amount: number; 
+        status: string;
+        type: string;
+        date: string;
+        customerId: string;
+      }>>('/transactions/find'),
+
+    getById: (id: string) =>
+      fetchApi<{ 
+        id: string; 
+        amount: number; 
+        status: string;
+        type: string;
+        date: string;
+        customerId: string;
+      }>(`/transactions/find/${id}`),
+
+    create: (transaction: { amount: number; status: string; type: string; customerId: string }) =>
+      fetchApi<{ id: string }>('/transactions/create', {
+        method: 'POST',
+        body: JSON.stringify(transaction),
+      }),
+  },
+
+  users: {
+    getAll: () =>
+      fetchApi<Array<{ id: string; name: string; email: string; role: string; createdAt: string }>>('/users/find'),
+
+    getByEmail: (email: string) =>
+      fetchApi<{ id: string; name: string; email: string; role: string; createdAt: string }>(`/users/find/email/${email}`),
+  },
 };

@@ -11,12 +11,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/_components/ui/card";
-import { AlertCircle, Eye, EyeOff } from "lucide-react";
+import { BarChart3, Eye, EyeOff, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/auth-context";
 
 export default function LoginPage() {
-  const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -43,139 +42,95 @@ export default function LoginPage() {
       toast.success("Login realizado com sucesso!");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.error("Erro no login:", error);
-      const message =
-        error?.message || "Erro ao fazer login. Verifique suas credenciais.";
-
-      setError(message);
-      toast.error(message);
+      toast.error(
+        error.message || "Erro ao fazer login. Verifique suas credenciais."
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col mt-10 m-auto items-center w-full max-w-xl space-y-6">
-      {/* Header */}
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold text-foreground">Welcome Back</h1>
-        <p className="text-muted-foreground">
-          Sign in to your analytics dashboard
-        </p>
-      </div>
-
-      {/* Form Card */}
-      <Card className="p-6 border border-border/50 bg-card/50 backdrop-blur">
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Email Field */}
-          <div className="space-y-2">
-            <Label
-              htmlFor="email"
-              className="text-sm font-medium text-foreground"
-            >
-              Email Address
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="your@company.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-input border-border/50 text-foreground placeholder:text-muted-foreground focus:ring-primary"
-              required
-            />
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-purple-50 p-4">
+      <Card className="w-full max-w-md shadow-2xl border-0">
+        <CardHeader className="space-y-3 text-center pb-8">
+          <div className="flex justify-center mb-2">
+            <div className="p-4 bg-linear-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg">
+              <BarChart3 className="h-10 w-10 text-white" />
+            </div>
           </div>
+          <CardTitle className="text-3xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            DataVision
+          </CardTitle>
+          <CardDescription className="text-base">
+            Entre com suas credenciais para acessar o dashboard
+          </CardDescription>
+        </CardHeader>
 
-          {/* Password Field */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label
-                htmlFor="password"
-                className="text-sm font-medium text-foreground"
-              >
-                Password
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-sm font-medium">
+                E-mail
               </Label>
-              <a
-                href="#"
-                className="text-xs text-primary hover:text-primary/80 transition-colors"
-              >
-                Forgot password?
-              </a>
-            </div>
-            <div className="relative">
               <Input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="bg-input border-border/50 text-foreground placeholder:text-muted-foreground focus:ring-primary pr-10"
-                required
+                id="email"
+                type="email"
+                placeholder="seu@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
+                className="h-11"
               />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {showPassword ? (
-                  <EyeOff className="w-4 h-4" />
-                ) : (
-                  <Eye className="w-4 h-4" />
-                )}
-              </button>
             </div>
-          </div>
 
-          {/* Error Message */}
-          {error && (
-            <div className="flex items-start gap-3 p-3 bg-destructive/10 border border-destructive/30 rounded-lg">
-              <AlertCircle className="w-4 h-4 text-destructive mt-0.5 shrink-0" />
-              <span className="text-sm text-destructive">{error}</span>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-sm font-medium">
+                Senha
+              </Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
+                  className="pr-10 h-11"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+                  disabled={isLoading}
+                  tabIndex={-1}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
             </div>
-          )}
 
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="w-full h-10 bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-colors"
-          >
-            {isLoading ? "Signing in..." : "Sign In"}
-          </Button>
-        </form>
+            <Button
+              type="submit"
+              className="w-full h-11 bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium shadow-lg hover:shadow-xl transition-all"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Entrando...
+                </>
+              ) : (
+                "Entrar"
+              )}
+            </Button>
+          </form>
+        </CardContent>
       </Card>
-
-      {/* Footer */}
-      <div className="space-y-4">
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-border/50" />
-          </div>
-          <div className="relative flex justify-center text-xs">
-            <span className="px-2 bg-background text-muted-foreground">
-              New to Analytics?
-            </span>
-          </div>
-        </div>
-
-        <Button
-          variant="outline"
-          className="w-full h-10 border-border/50 text-foreground hover:bg-card/50"
-        >
-          Request Access
-        </Button>
-
-        <p className="text-xs text-center text-muted-foreground">
-          By signing in, you agree to our{" "}
-          <a href="#" className="text-primary hover:underline">
-            Terms of Service
-          </a>{" "}
-          and{" "}
-          <a href="#" className="text-primary hover:underline">
-            Privacy Policy
-          </a>
-        </p>
-      </div>
     </div>
   );
 }
