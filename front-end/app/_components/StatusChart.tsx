@@ -22,9 +22,11 @@ export default function StatusChart({ data }: StatusChartProps) {
   const total = Object.values(data).reduce((sum, val) => sum + val, 0);
 
   return (
-    <Card>
+    <Card className="p-6 border border-border/50 bg-card">
       <CardHeader>
-        <CardTitle>Transações por Status</CardTitle>
+        <CardTitle className="text-lg font-semibold text-foreground mb-4">
+          Transações por Status
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -32,17 +34,17 @@ export default function StatusChart({ data }: StatusChartProps) {
             const percentage = (count / total) * 100;
             return (
               <div key={status} className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="font-medium">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-muted-foreground">
                     {statusLabels[status] || status}
                   </span>
-                  <span className="text-muted-foreground">
+                  <span className="text-sm font-medium text-foreground">
                     {count} ({percentage.toFixed(1)}%)
                   </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div className="w-full bg-muted rounded-full h-2">
                   <div
-                    className={`h-2.5 rounded-full ${statusColors[status]}`}
+                    className={` ${statusColors[status]} h-2 rounded-full transition-all`}
                     style={{ width: `${percentage}%` }}
                   ></div>
                 </div>

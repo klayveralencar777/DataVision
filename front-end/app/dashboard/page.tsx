@@ -8,17 +8,14 @@ import {
   TrendingUp,
   Percent,
   CreditCard,
-  LogOut,
-  RefreshCw,
 } from "lucide-react";
-import { useAuth } from "@/contexts/auth-context";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
 import StatusChart from "../_components/StatusChart";
 import CustomerSpendingChart from "../_components/CustomerSpendingChart";
 import KPICard from "../_components/KpiCard";
-import { Button } from "../_components/ui/button";
 import { Skeleton } from "../_components/ui/skeleton";
+import Header from "./../_components/Header";
 
 interface Metrics {
   totalCustomers: number;
@@ -31,7 +28,6 @@ interface Metrics {
 }
 
 export default function DashboardPage() {
-  const { user, logout } = useAuth();
   const [metrics, setMetrics] = useState<Metrics | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -58,15 +54,15 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
-          <div className="flex items-center justify-between">
-            <Skeleton className="h-12 w-64" />
-            <Skeleton className="h-10 w-32" />
-          </div>
+      <div className="min-h-screen bg-background">
+        <Header
+          onRefresh={() => loadMetrics(true)}
+          isRefreshing={isRefreshing}
+        />
+        <div className="max-w-7xl mx-auto p-6 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
-              <Skeleton key={i} className="h-32" />
+              <Skeleton key={i} className="h-40" />
             ))}
           </div>
         </div>
@@ -91,39 +87,11 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 via-blue-50 to-purple-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-white border-b shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Dashboard DataVision
-            </h1>
-            <p className="text-sm text-gray-600 mt-1">
-              Bem-vindo, {user?.name}
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => loadMetrics(true)}
-              disabled={isRefreshing}
-            >
-              <RefreshCw
-                className={`h-4 w-4 mr-2 ${isRefreshing ? "animate-spin" : ""}`}
-              />
-              Atualizar
-            </Button>
-            <Button variant="destructive" size="sm" onClick={logout}>
-              <LogOut className="h-4 w-4 mr-2" />
-              Sair
-            </Button>
-          </div>
-        </div>
-      </div>
+      <Header onRefresh={() => loadMetrics(true)} isRefreshing={isRefreshing} />
 
-      <div className="max-w-7xl mx-auto p-6 space-y-8">
+      <div className="max-w-7xl mx-auto p-6 space-y-6">
         {/* KPI Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <KPICard

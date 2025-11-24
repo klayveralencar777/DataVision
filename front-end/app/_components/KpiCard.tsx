@@ -20,19 +20,23 @@ export default function KPICard({
   trend,
 }: KPICardProps) {
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{title}</CardTitle>
-        <Icon className="h-4 w-4 text-muted-foreground" />
+    <Card className="p-6 border border-border/50 bg-card hover:bg-card/80 hover:border-accent/30 transition-all hover:shadow-lg hover:shadow-accent/10">
+      <CardHeader className="flex items-start justify-between mb-4">
+        <CardTitle className="text-card-foreground font-medium text-sm">
+          {title}
+        </CardTitle>
+        <Icon className="text-accent/60 w-5 h-5" />
       </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
+      <CardContent className="space-y-2">
+        <div className="text-3xl font-bold text-foreground">{value}</div>
         {description && (
-          <p className="text-xs text-muted-foreground mt-1">{description}</p>
+          <p className="text-sm text-muted-foreground">{description}</p>
         )}
         {trend && (
           <p
-            className={`text-xs mt-1 ${trend.isPositive ? "text-green-600" : "text-red-600"}`}
+            className={`text-sm font-medium ${
+              trend.isPositive ? "text-green-400" : "text-red-400"
+            }`}
           >
             {trend.isPositive ? "+" : ""}
             {trend.value}% em relação ao mês anterior
