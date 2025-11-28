@@ -16,6 +16,7 @@ import CustomerSpendingChart from "../_components/CustomerSpendingChart";
 import KPICard from "../_components/KpiCard";
 import { Skeleton } from "../_components/ui/skeleton";
 import Header from "./../_components/Header";
+import AiChatButton from "./../_components/AiChatButton";
 
 interface Metrics {
   totalCustomers: number;
@@ -90,7 +91,7 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <Header onRefresh={() => loadMetrics(true)} isRefreshing={isRefreshing} />
-
+      <AiChatButton />
       <div className="max-w-7xl mx-auto p-6 space-y-6">
         {/* KPI Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

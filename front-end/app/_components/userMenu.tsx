@@ -29,30 +29,35 @@ const UserMenu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:text-black border border-white hover:border-black transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
           <Avatar className="h-10 w-10">
             <AvatarImage src="" alt={user.name} />
             <AvatarFallback className="bg-linear-to-br from-blue-500 to-purple-600 text-white font-semibold">
               {getInitials(user.name)}
             </AvatarFallback>
           </Avatar>
-          <div className="text-left hidden sm:block bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <div className="text-left hidden sm:block text-white hover:text-black">
             <p className="text-sm font-medium ">{user.name}</p>
             <p className="text-xs ">{user.email}</p>
           </div>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+      <DropdownMenuContent
+        align="end"
+        className="w-56 border border-white bg-card text-white hover:border-black transition-colors"
+      >
+        <DropdownMenuLabel className="text-white">
+          Minha Conta
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="flex flex-col items-start py-2">
+        <DropdownMenuItem className="flex flex-col items-start py-2 text-white hover:text-black">
           <span className="font-medium">{user.name}</span>
-          <span className="text-xs text-gray-500">{user.email}</span>
+          <span className="text-xs text-gray-200">{user.email}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={logout}
-          className="text-red-600 cursor-pointer focus:text-red-600 focus:bg-red-50"
+          className="bg-red-500 hover:bg-red-600 text-white hover:text-black shadow-lg"
         >
           <LogOut className="mr-2 h-4 w-4" />
           <span>Sair</span>

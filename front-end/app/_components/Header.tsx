@@ -23,28 +23,24 @@ const Header = ({ onRefresh, isRefreshing = false }: HeaderProps) => {
   const isDashboard = pathname === "/dashboard";
 
   return (
-    <div className="sticky inset-0 bg-linear-to-br from-blue-950/20 via-purple-950/10 to-pink-950/20 border-b shadow-sm top-0 z-10">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <header className="bg-linear-to-r from-blue-600 to-pink-500 shadow-xl border-b border-pink-400/20 px-5">
+      <div className="px-6 md:px-8 py-4 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            DataVision
-          </h1>
+          <h1 className="text-2xl font-bold text-white">DataVision</h1>
         </div>
 
         <div className="flex items-center gap-3">
           {/* Botão de Refresh - Apenas na Dashboard e se estiver logado */}
           {user && isDashboard && onRefresh && (
             <Button
-              className="bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+              className="border-white/30 text-white hover:bg-white/10 bg-white/5"
               variant="outline"
               size="sm"
               onClick={onRefresh}
               disabled={isRefreshing}
             >
               <RefreshCw
-                className={`text-white h-4 w-4 mr-2 ${
-                  isRefreshing ? "animate-spin" : ""
-                }`}
+                className={`h-4 w-4 mr-2 ${isRefreshing ? "animate-spin" : ""}`}
               />
               Atualizar
             </Button>
@@ -61,7 +57,7 @@ const Header = ({ onRefresh, isRefreshing = false }: HeaderProps) => {
           )}
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 
